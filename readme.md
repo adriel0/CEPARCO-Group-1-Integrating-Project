@@ -5,3 +5,5 @@ Google spreadsheet showing manual trace of proposed algorithm:<br />
 https://docs.google.com/spreadsheets/d/1yikS2jaucdczSqupVeLOc2QDwOYCaTpgCtjsFYrWkqI/edit?gid=0#gid=0<br />
 *Note: this spreadsheet also includes our answers for the proposal clarifications
 
+Manual Trace Video (including Proposal Clarifications Answers):<br />
+https://drive.google.com/file/d/1ElGncJjlLj09InicN18ArHigvvm-DJF5/view?usp=sharing
