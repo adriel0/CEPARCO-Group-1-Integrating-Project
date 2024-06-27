@@ -9,8 +9,7 @@ CUDA will be implemented in Visual Studio 2022. In the program, CUDA will be use
 2. What will be the largest array of your fp signals?<br />
 The largest array will be around 2^25 to 2^26 fps.
 
-3. 
-Google spreadsheet showing manual trace of proposed algorithm:<br />
+3. Google spreadsheet showing manual trace of proposed algorithm:<br />
 https://docs.google.com/spreadsheets/d/1yikS2jaucdczSqupVeLOc2QDwOYCaTpgCtjsFYrWkqI/edit?gid=0#gid=0<br />
 *Note: this spreadsheet also includes our answers for the proposal clarifications
 
