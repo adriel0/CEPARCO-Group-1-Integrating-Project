@@ -3,7 +3,7 @@ https://drive.google.com/file/d/1VF1ZZNcQvpfS1DpbYgsV154yv99_VvMq/view?usp=shari
 
 **Proposal Clarifications**
 
-1. 1. Where will CUDA be implemented?<br />
+1. Where will CUDA be implemented?<br />
 CUDA will be implemented in Visual Studio 2022. In the program, CUDA will be used for the computations.
 
 2. What will be the largest array of your fp signals?<br />
