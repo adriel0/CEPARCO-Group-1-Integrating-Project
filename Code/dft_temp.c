@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 #define PI 3.14159265358979323846
@@ -12,7 +13,7 @@ void dft(int len) {
 
 	for (int i = 0; i < len; i++) {
 		printf("Enter value [%d]: ", i);
-		scanf("%f", x[i]);
+		scanf("%f", &x[i]);
 	}
 
 	for (k = 0; k < N; k++) {
@@ -23,12 +24,12 @@ void dft(int len) {
 			xr[k] = xr[k] + x[n] * cos(theta);
 			xi[k] = xi[k] - x[n] * sin(theta);
 		}
+		printf("%f + j(%f)\n", xr[k], xi[k]);
 	}
 
-	for (int i = 0; i < len; i++) {
-
-	}
-
+	free(x);
+	free(xr);
+	free(xi);
 }
 
 // for test only, change for CUDA implementation
