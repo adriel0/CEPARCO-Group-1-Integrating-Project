@@ -15,7 +15,10 @@ void idft(float* xr, float* xi) {
 			y[n] = y[n] + xr[k] * cos(theta) + xi[k] * sin(theta);
 		}
 		y[n] = y[n]/N;
+		printf("%f\n", y[n]);
 	}
+
+	free(y);
 }
 
 int main() {
