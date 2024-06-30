@@ -23,14 +23,15 @@ void idft(float* xr, float* xi) {
 
 int main() {
 	int N = 10;
-	float xr[10], xi[10];
-
+	float* xr = (float*)malloc(N * sizeof(float));
+	float* xi = (float*)malloc(N * sizeof(float));
+	
 	for (int i = 0; i < N; i++){
 		xr[i] = (float)i;
 		xi[i] = (float)(i*2);
 	}	
 
-	idft(&xr, &xi);
+	idft(xr, xi);
 
 	return 0;
 }
