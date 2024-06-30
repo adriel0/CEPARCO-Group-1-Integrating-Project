@@ -6,8 +6,16 @@
 
 void idft(float* xr, float* xi) {
 	int N = sizeof(xr)/sizeof(xr[0]);
-	float* x = (float*)malloc(N * sizeof(float));
+	float* y = (float*)malloc(N * sizeof(float));
+	float theta;
 	
+	for (int n = 0; n < N; n++){
+		for (int k = 0; k < N; k++){
+			theta = (2 * PI * k * n)/N;
+			y[n] = y[n] + xr[k] * cos(theta) + xi[k] * sin(theta);
+		}
+		y[n] = y[n]/N;
+	}
 }
 
 int main() {
