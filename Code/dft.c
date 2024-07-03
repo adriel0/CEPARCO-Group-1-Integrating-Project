@@ -4,17 +4,11 @@
 
 #define PI 3.14159265358979323846
 
-void dft(int len) {
-	float* x = (float*)malloc(len * sizeof(float));
-	float* xr = (float*)malloc(len * sizeof(float));
-	float* xi = (float*)malloc(len * sizeof(float));
-	int k, n, N = len;
+void dft(float* x, int N) {
+	float* xr = (float*)malloc(N * sizeof(float));
+	float* xi = (float*)malloc(N * sizeof(float));
+	int k, n;
 	float theta;
-
-	for (int i = 0; i < len; i++) {
-		printf("Enter value [%d]: ", i);
-		scanf("%f", &x[i]);
-	}
 
 	for (k = 0; k < N; k++) {
 		xr[k] = 0;
@@ -27,18 +21,21 @@ void dft(int len) {
 		printf("%f + j(%f)\n", xr[k], xi[k]);
 	}
 
-	free(x);
 	free(xr);
 	free(xi);
 }
 
 // for test only, change for CUDA implementation
 int main() {
-	int signal_len;
+	int N = 10;
+	
+	float* x = (float*)malloc(N * sizeof(float));
+	
+	for(int i = 0; i < N; i++) {
+		x[i] = (float)i;
+	}
 
-	printf("Enter number of elements: ");
-	scanf("%d", &signal_len);
-
-	dft(signal_len);
+	dft(x, N);
+	free(x);
 	return 0;
 }
