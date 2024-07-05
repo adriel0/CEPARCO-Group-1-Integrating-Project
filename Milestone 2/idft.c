@@ -33,5 +33,7 @@ int main() {
 
 	idft(xr, xi, N);
 
+	free(xr);
+	free(xi);
 	return 0;
 }
