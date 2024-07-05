@@ -4,7 +4,7 @@
 
 #define PI 3.14159265358979323846
 
-void idft(float N, float* xr, float* xi) {
+void idft(float* xr, float* xi, int N) {
 	float* y = (float*)malloc(N * sizeof(float));
 	float theta;
 	
@@ -23,7 +23,7 @@ void idft(float N, float* xr, float* xi) {
 }
 
 int main() {
-	float N = 10;
+	int N = 10;
 	float* xr = (float*)malloc(N * sizeof(float));
 	float* xi = (float*)malloc(N * sizeof(float));
 	
@@ -32,7 +32,7 @@ int main() {
 		xi[i] = (float)(i*2);
 	}	
 
-	idft(N, xr, xi);
+	idft(xr, xi, N);
 
 	return 0;
 }
