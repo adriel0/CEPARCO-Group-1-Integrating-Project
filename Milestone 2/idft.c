@@ -10,7 +10,6 @@ void idft(float* xr, float* xi, int N) {
 	
 	printf("IDFT:\n");
 	for (int n = 0; n < N; n++){
-		y[n] = 0;
 		for (int k = 0; k < N; k++){
 			theta = (2 * PI * k * n)/N;
 			y[n] = y[n] + xr[k] * cos(theta) - xi[k] * sin(theta);
