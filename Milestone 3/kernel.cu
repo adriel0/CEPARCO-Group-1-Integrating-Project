@@ -4,7 +4,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
+#include <windows.h>
 #include <math.h>
 
 #define PI 3.14159265358979323846
@@ -48,6 +50,10 @@ void function2(size_t N, double* xr, double* xi, double* y)
 }
 
 int main() {
+    LARGE_INTEGER StartingTime, EndingTime, ElapsedMicroseconds;
+    LARGE_INTEGER Frequency;
+    QueryPerformanceFrequency(&Frequency);
+    double total_time, ave_time;
     const size_t ARRAY_SIZE = 5;//1<<8;
     //const size_t ARRAY_SIZE = 1<<10;
     //const size_t ARRAY_SIZE = 1<<24;
@@ -93,12 +99,17 @@ int main() {
     printf("*** function ***\n");
     printf("numElements = %lu\n", ARRAY_SIZE);
     printf("numBlocks = %lu, numThreads = %lu \n", numBlocks, numThreads);
+    QueryPerformanceCounter(&StartingTime);
     for (size_t i = 0; i < loope;i++) {
         function << <numBlocks, numThreads >> > (ARRAY_SIZE, xr, xi, x);
     }
 
     //barrier
     cudaDeviceSynchronize();
+    QueryPerformanceCounter(&EndingTime);
+    total_time = ((double)((EndingTime.QuadPart - StartingTime.QuadPart) * 1000000 / Frequency.QuadPart)) / 1000;
+    ave_time = total_time / loope;
+    printf("Average time of %d runs: %f ms\n\n", loope, ave_time);
     cudaMemPrefetchAsync(x, ARRAY_BYTES, cudaCpuDeviceId, NULL);
     cudaMemPrefetchAsync(xr, ARRAY_BYTES, cudaCpuDeviceId, NULL);
     cudaMemPrefetchAsync(xi, ARRAY_BYTES, cudaCpuDeviceId, NULL);
