@@ -14,10 +14,6 @@ void function(size_t N, double* xr, double* xi, double* x)
 {
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
-    /*for (int i = index; i < n; i += stride) {
-        saxpy[i] = x * A[i] + y[i];
-    }*/
-
 
 
     double theta;
@@ -30,7 +26,6 @@ void function(size_t N, double* xr, double* xi, double* x)
             xr[k] = xr[k] + x[n] * cos(theta);
             xi[k] = xi[k] - x[n] * sin(theta);
         }
-        //printf("%.3f + j(%.3f)\n", xr[k], xi[k]);
     }
 
 }
@@ -42,10 +37,9 @@ void function2(size_t N, double* xr, double* xi, double* y)
     double theta;
     for (int n = index; n < N; n += stride) {
         y[n] = 0;
-        //for (int n = 0; n < N; n ++) {
         for (int k = 0; k < N; k++) {
             theta = (2 * PI * k * n) / (double)N;
-            y[n] = y[n] + xr[k] * cos(theta) - xi[k] * sin(theta);//x[n]+(xr[k] *cos(theta));//
+            y[n] = y[n] + xr[k] * cos(theta) - xi[k] * sin(theta);
         }
         y[n] = y[n] / (double)N;
 
@@ -61,7 +55,7 @@ int main() {
     //const size_t ARRAY_SIZE = 1<<28;
     const size_t ARRAY_BYTES = ARRAY_SIZE * sizeof(double);
     //number of times the program is to be executed
-    const size_t loope = 10;
+    const size_t loope = 1;
     //declare array
 
     int device = -1;
@@ -71,7 +65,7 @@ int main() {
     cudaMallocManaged(&xi, ARRAY_BYTES);
     cudaMallocManaged(&x, ARRAY_BYTES);
     cudaMallocManaged(&y, ARRAY_BYTES);
-    /*//mem advise
+    //mem advise
     cudaMemAdvise(x, ARRAY_BYTES, cudaMemAdviseSetPreferredLocation, cudaCpuDeviceId);
     cudaMemAdvise(x, ARRAY_BYTES, cudaMemAdviseSetReadMostly, cudaCpuDeviceId);
     //page creation
@@ -79,7 +73,7 @@ int main() {
     cudaMemPrefetchAsync(xr, ARRAY_BYTES, device, NULL);
     cudaMemPrefetchAsync(xi, ARRAY_BYTES, device, NULL);
     cudaMemPrefetchAsync(y, ARRAY_BYTES, device, NULL);
-    */// init array
+    // init array
     for (int i = 0;i < ARRAY_SIZE;i++) {
         x[i] = (double)i;
     }
@@ -88,7 +82,7 @@ int main() {
         printf("y[%d] = %.2f\n", i, x[i]);
     }
     //prefetch
-    //cudaMemPrefetchAsync(x, ARRAY_BYTES, device, NULL);
+    cudaMemPrefetchAsync(x, ARRAY_BYTES, device, NULL);
 
     // setup CUDA kernel
     size_t numThreads = 256;
@@ -96,9 +90,6 @@ int main() {
     //size_t numThreads = 1024;
     //size_t numBlocks = 1;
     size_t numBlocks = (ARRAY_SIZE + numThreads - 1) / numThreads;
-    /*//this area is for 2<<8 because it is page faulting even if we already have prefetch with page creation and memadivse
-      function2 <<<numBlocks, numThreads>>> (ARRAY_SIZE,A,y,x,saxpy);
-    /**/
     printf("*** function ***\n");
     printf("numElements = %lu\n", ARRAY_SIZE);
     printf("numBlocks = %lu, numThreads = %lu \n", numBlocks, numThreads);
@@ -108,41 +99,41 @@ int main() {
 
     //barrier
     cudaDeviceSynchronize();
-    //cudaMemPrefetchAsync(x, ARRAY_BYTES, cudaCpuDeviceId, NULL);
-    //cudaMemPrefetchAsync(xr, ARRAY_BYTES, cudaCpuDeviceId, NULL);
-    //cudaMemPrefetchAsync(xi, ARRAY_BYTES, cudaCpuDeviceId, NULL);
+    cudaMemPrefetchAsync(x, ARRAY_BYTES, cudaCpuDeviceId, NULL);
+    cudaMemPrefetchAsync(xr, ARRAY_BYTES, cudaCpuDeviceId, NULL);
+    cudaMemPrefetchAsync(xi, ARRAY_BYTES, cudaCpuDeviceId, NULL);
     //error checking
-    for (size_t i = 0; i < ARRAY_SIZE;i++) {
+    /*for (size_t i = 0; i < ARRAY_SIZE;i++) {
         printf("%.3f + j(%.5f)\n", xr[i], xi[i]);
-    }
+    }*/
 
 
-    /*//mem advise
+    //mem advise
     cudaMemAdvise(xr, ARRAY_BYTES, cudaMemAdviseSetPreferredLocation, cudaCpuDeviceId);
     cudaMemAdvise(xr, ARRAY_BYTES, cudaMemAdviseSetReadMostly, cudaCpuDeviceId);
     cudaMemAdvise(xi, ARRAY_BYTES, cudaMemAdviseSetPreferredLocation, cudaCpuDeviceId);
     cudaMemAdvise(xi, ARRAY_BYTES, cudaMemAdviseSetReadMostly, cudaCpuDeviceId);
     //page creation
-    */
+    
 
-    //cudaMemPrefetchAsync(xr, ARRAY_BYTES, device, NULL);
-    //cudaMemPrefetchAsync(xi, ARRAY_BYTES, device, NULL);
+    cudaMemPrefetchAsync(xr, ARRAY_BYTES, device, NULL);
+    cudaMemPrefetchAsync(xi, ARRAY_BYTES, device, NULL);
     for (size_t i = 0; i < loope;i++) {
         function2 << <numBlocks, numThreads >> > (ARRAY_SIZE, xr, xi, y);
     }
 
     ////barrier
     cudaDeviceSynchronize();
-    //cudaMemPrefetchAsync(y, ARRAY_BYTES, cudaCpuDeviceId, NULL);
-    for (size_t i = 0; i < ARRAY_SIZE;i++) {
+    cudaMemPrefetchAsync(y, ARRAY_BYTES, cudaCpuDeviceId, NULL);
+    /*for (size_t i = 0; i < ARRAY_SIZE;i++) {
         printf("y[%d] = %.2f\n", i, x[i]);
-    }
+    }*/
     size_t err_count = 0;
-    /*for (int i = 0; i < ARRAY_SIZE; i++) {
-        if (saxpy[i] != x * A[i] + y[i]) {
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        if (x[i] != y[i]) {
             err_count++;
         }
-    }*/
+    }
     printf("Error count(CUDA program): %zu\n", err_count);
     //free memory
     cudaFree(xr);
