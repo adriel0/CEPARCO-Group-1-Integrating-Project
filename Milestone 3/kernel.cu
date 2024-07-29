@@ -54,9 +54,12 @@ int main() {
     LARGE_INTEGER Frequency;
     QueryPerformanceFrequency(&Frequency);
     double total_time, ave_time;
-    //const size_t ARRAY_SIZE = 5;
     //const size_t ARRAY_SIZE = 1<<10;
-    const size_t ARRAY_SIZE = 1<<16;
+    //const size_t ARRAY_SIZE = 1<<12;
+    //const size_t ARRAY_SIZE = 1<<15;
+    //const size_t ARRAY_SIZE = 1<<16;
+    //const size_t ARRAY_SIZE = 1<<17;
+    const size_t ARRAY_SIZE = 1 << 20;
     const size_t ARRAY_BYTES = ARRAY_SIZE * sizeof(double);
     //number of times the program is to be executed
     const size_t loope = 1;
@@ -107,7 +110,7 @@ int main() {
     QueryPerformanceCounter(&EndingTime);
     total_time = ((double)((EndingTime.QuadPart - StartingTime.QuadPart) * 1000000 / Frequency.QuadPart)) / 1000;
     ave_time = total_time / loope;
-    printf("Time taken: %f ms\n\n", ave_time);
+    printf("Time taken for DFT: %f ms\n\n", ave_time);
     cudaMemPrefetchAsync(x, ARRAY_BYTES, cudaCpuDeviceId, NULL);
     cudaMemPrefetchAsync(xr, ARRAY_BYTES, cudaCpuDeviceId, NULL);
     cudaMemPrefetchAsync(xi, ARRAY_BYTES, cudaCpuDeviceId, NULL);
@@ -127,10 +130,16 @@ int main() {
 
     cudaMemPrefetchAsync(xr, ARRAY_BYTES, device, NULL);
     cudaMemPrefetchAsync(xi, ARRAY_BYTES, device, NULL);
+
+    QueryPerformanceCounter(&StartingTime);
     function2 << <numBlocks, numThreads >> > (ARRAY_SIZE, xr, xi, y);
 
     ////barrier
     cudaDeviceSynchronize();
+    QueryPerformanceCounter(&EndingTime);
+    total_time = ((double)((EndingTime.QuadPart - StartingTime.QuadPart) * 1000000 / Frequency.QuadPart)) / 1000;
+    ave_time = total_time / loope;
+    printf("Time taken for IDFT: %f ms\n\n", ave_time);
     cudaMemPrefetchAsync(y, ARRAY_BYTES, cudaCpuDeviceId, NULL);
    /* for (size_t i = 0; i < ARRAY_SIZE;i++) {
         printf("y[%d] = %.2f\n", i, y[i]);
