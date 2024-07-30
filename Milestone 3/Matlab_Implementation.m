@@ -1,12 +1,12 @@
 %%---------------- MATLAB IMPLEMENTATION ---------------------
 %% value initialization
-N = 2^10;
+N = 2^14;
 fprintf("Number of Elements: %d\n", N);
 x = zeros(N, 1);
 for i = 0:N-1
     x(i+1) = i;
 end
-loop = 1;   % change to 1 for correctness checking
+loop = 5;   % change to 1 for correctness checking
 fprintf("Number of Loops: %d\n", loop);
 
 
@@ -32,6 +32,7 @@ average_time = total_time/5;
 
 fprintf('Average time elapsed (DFT): %fms\n', average_time)
 
+%% calcs for DFT built-in
 total_time = 0;
 for i = 1:loop
     t0 = datetime("now");
@@ -52,14 +53,14 @@ fprintf('Average time elapsed (DFT built-in): %fms\n', average_time)
 
 
 %% output results for DFT correction checking, used for 2^10 for fast output
-% fileID = fopen('sample.txt','w');
-% for i = 1:1:size(x)
-%     fprintf(fileID,'%f %f\n',xr(i),xi(i));
-% end
-% for i = 1:1:size(x)
-%     fprintf(fileID,'%f %f\n',bixr(i),bixi(i));
-% end
-% fclose(fileID);
+fileID = fopen('sample.txt','w');
+for i = 1:1:size(x)
+    fprintf(fileID,'%f %f\n',xr(i),xi(i));
+end
+for i = 1:1:size(x)
+    fprintf(fileID,'%f %f\n',bixr(i),bixi(i));
+end
+fclose(fileID);
 
 %% calcs for IDFT
 total_time = 0;
@@ -84,6 +85,7 @@ average_time = total_time/5;
 %end
 fprintf('Average time elapsed (IDFT): %fms\n', average_time)
 
+%% calcs for IDFT built-in
 total_time = 0;
 for i = 1:loop
     y = zeros(N, 1);
