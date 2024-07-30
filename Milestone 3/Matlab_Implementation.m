@@ -28,7 +28,7 @@ for i = 1:loop
     ms = milliseconds(t1 - t0);
     total_time = total_time + ms;
 end
-average_time = total_time/5;
+average_time = total_time/loop;
 
 fprintf('Average time elapsed (DFT): %fms\n', average_time)
 
@@ -43,7 +43,7 @@ for i = 1:loop
     ms = milliseconds(t1 - t0);
     total_time = total_time + ms;
 end
-average_time = total_time/5;
+average_time = total_time/loop;
 
 
 %for i = 1:size(x)
@@ -78,7 +78,7 @@ for i = 1:loop
     ms = milliseconds(t1 - t0);
     total_time = total_time + ms;
 end
-average_time = total_time/5;
+average_time = total_time/loop;
 
 %for i = 1:size(x)
 %   fprintf("%f\n", y(i))
@@ -95,5 +95,5 @@ for i = 1:loop
     ms = milliseconds(t1 - t0);
     total_time = total_time + ms;
 end
-average_time = total_time/5;
+average_time = total_time/loop;
 fprintf('Average time elapsed (IDFT built-in): %fms\n', average_time)
