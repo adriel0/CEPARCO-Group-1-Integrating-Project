@@ -94,4 +94,4 @@ for i = 1:loop
     total_time = total_time + ms;
 end
 average_time = total_time/5;
-fprintf('Average time elapsed (IDFT): %fms\n', average_time)
+fprintf('Average time elapsed (IDFT built-in): %fms\n', average_time)
