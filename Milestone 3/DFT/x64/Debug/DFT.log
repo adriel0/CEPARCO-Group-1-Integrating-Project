@@ -1,22 +1,28 @@
 ﻿  Compiling CUDA source file kernel.cu...
   
   C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "E:\Programming\Software\Visual Studio\IDE\VC\Tools\MSVC\14.39.33519\bin\HostX64\x64" -x cu   -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\include"  -G   --keep-dir DFT\x64\Debug  -maxrregcount=0   --machine 64 --compile -cudart static  -g  -DWIN32 -DWIN64 -D_DEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/FdDFT\x64\Debug\vc143.pdb" -o "C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\DFT\x64\Debug\kernel.cu.obj" "C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu" 
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(53): warning #177-D: variable "ElapsedMicroseconds" was declared but never referenced
+        LARGE_INTEGER StartingTime, EndingTime, ElapsedMicroseconds;
+                                                ^
+  
+  Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+  
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(163): warning #177-D: variable "j" was declared but never referenced
+        int j;
+            ^
+  
   kernel.cu
-  tmpxft_0000464c_00000000-7_kernel.cudafe1.cpp
-C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(88): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-  C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(88): note: consider using '%zd' in the format string
-C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(103): warning C4477: 'printf' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 1 has type 'const size_t'
-  C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(103): note: consider using '%zu' in the format string
-C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(104): warning C4477: 'printf' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 1 has type 'size_t'
-  C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(104): note: consider using '%zu' in the format string
-C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(104): warning C4477: 'printf' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 2 has type 'size_t'
-  C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(104): note: consider using '%zu' in the format string
-C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(106): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(106): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(131): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(131): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(138): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-  C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(138): note: consider using '%zd' in the format string
-     Creating library C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\x64\Debug\DFT.lib and object C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\x64\Debug\DFT.exp
-LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  tmpxft_00000e20_00000000-7_kernel.cudafe1.cpp
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(99): warning C4477: 'printf' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 1 has type 'const size_t'
+  C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(99): note: consider using '%zu' in the format string
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(100): warning C4477: 'printf' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 1 has type 'size_t'
+  C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(100): note: consider using '%zu' in the format string
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(100): warning C4477: 'printf' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 2 has type 'size_t'
+  C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(100): note: consider using '%zu' in the format string
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(108): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(108): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(143): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(143): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(53): warning C4101: 'ElapsedMicroseconds': unreferenced local variable
+C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\kernel.cu(163): warning C4101: 'j': unreferenced local variable
   DFT.vcxproj -> C:\Users\Adriel Teng\source\repos\CEPARCO-Group-1-Integrating-Project\Milestone 3\x64\Debug\DFT.exe

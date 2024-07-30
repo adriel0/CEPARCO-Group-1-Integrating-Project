@@ -56,13 +56,13 @@ int main() {
     double total_time, ave_time;
     //const size_t ARRAY_SIZE = 1<<10;
     //const size_t ARRAY_SIZE = 1<<12;
-    //const size_t ARRAY_SIZE = 1<<15;
+    //const size_t ARRAY_SIZE = 1<<14;
     //const size_t ARRAY_SIZE = 1<<16;
-    //const size_t ARRAY_SIZE = 1<<17;
-    const size_t ARRAY_SIZE = 1 << 20;
+    const size_t ARRAY_SIZE = 1<<17;
+    //const size_t ARRAY_SIZE = 1 << 20;
     const size_t ARRAY_BYTES = ARRAY_SIZE * sizeof(double);
     //number of times the program is to be executed
-    const size_t loope = 1;
+    const size_t loope = 5;
     //declare array
 
     int device = -1;
@@ -84,13 +84,11 @@ int main() {
     for (int i = 0;i < ARRAY_SIZE;i++) {
         x[i] = (double)i;
     }
-
     /*for (size_t i = 0; i < ARRAY_SIZE;i++) {
         printf("y[%d] = %.2f\n", i, x[i]);
     }*/
     //prefetch
     cudaMemPrefetchAsync(x, ARRAY_BYTES, device, NULL);
-
     // setup CUDA kernel
     //size_t numThreads = 256;
     //size_t numThreads = 512;
@@ -100,15 +98,20 @@ int main() {
     printf("*** function ***\n");
     printf("numElements = %lu\n", ARRAY_SIZE);
     printf("numBlocks = %lu, numThreads = %lu \n", numBlocks, numThreads);
-    QueryPerformanceCounter(&StartingTime);
+    total_time = 0.0;
     for (size_t i = 0; i < loope;i++) {
+        for (int i = 0;i < ARRAY_SIZE;i++) {
+            xr[i] = (double)0.0;
+            xi[i] = (double)0.0;
+        }
+        QueryPerformanceCounter(&StartingTime);
         function << <numBlocks, numThreads >> > (ARRAY_SIZE, xr, xi, x);
+        cudaDeviceSynchronize();
+        QueryPerformanceCounter(&EndingTime);
+        total_time += ((double)((EndingTime.QuadPart - StartingTime.QuadPart) * 1000000 / Frequency.QuadPart)) / 1000;
     }
 
-    //barrier
-    cudaDeviceSynchronize();
-    QueryPerformanceCounter(&EndingTime);
-    total_time = ((double)((EndingTime.QuadPart - StartingTime.QuadPart) * 1000000 / Frequency.QuadPart)) / 1000;
+    
     ave_time = total_time / loope;
     printf("Time taken for DFT: %f ms\n\n", ave_time);
     cudaMemPrefetchAsync(x, ARRAY_BYTES, cudaCpuDeviceId, NULL);
@@ -131,13 +134,20 @@ int main() {
     cudaMemPrefetchAsync(xr, ARRAY_BYTES, device, NULL);
     cudaMemPrefetchAsync(xi, ARRAY_BYTES, device, NULL);
 
-    QueryPerformanceCounter(&StartingTime);
-    function2 << <numBlocks, numThreads >> > (ARRAY_SIZE, xr, xi, y);
+    total_time = 0.0;
+    for (size_t i = 0; i < loope;i++) {
+        for (int i = 0;i < ARRAY_SIZE;i++) {
+            y[i] = (double)0.0;
+        }
+        QueryPerformanceCounter(&StartingTime);
+        function2 << <numBlocks, numThreads >> > (ARRAY_SIZE, xr, xi, y);
+        cudaDeviceSynchronize();
+        QueryPerformanceCounter(&EndingTime);
+        total_time += ((double)((EndingTime.QuadPart - StartingTime.QuadPart) * 1000000 / Frequency.QuadPart)) / 1000;
+    }
 
-    ////barrier
-    cudaDeviceSynchronize();
-    QueryPerformanceCounter(&EndingTime);
-    total_time = ((double)((EndingTime.QuadPart - StartingTime.QuadPart) * 1000000 / Frequency.QuadPart)) / 1000;
+
+
     ave_time = total_time / loope;
     printf("Time taken for IDFT: %f ms\n\n", ave_time);
     cudaMemPrefetchAsync(y, ARRAY_BYTES, cudaCpuDeviceId, NULL);
@@ -145,14 +155,57 @@ int main() {
         printf("y[%d] = %.2f\n", i, y[i]);
     }*/
     size_t err_count = 0;
-    for (int i = 0; i < ARRAY_SIZE; i++) {
-        if (x[i]*0.999 > y[i] || x[i] * 1.001 < y[i]) {
 
+
+    FILE* myfile;
+    double myvariable;
+
+
+    myfile = fopen("sample.txt", "r");
+
+    //for (int i = 0; i < ARRAY_SIZE; i++)
+    //{
+    //    fscanf(myfile, "%lf", &myvariable);
+    //    if (fabs(myvariable - xr[i])>0.1) {
+
+    //        printf("x[%d] = %.2f\ny[%d] = %.2f diff = %f\n", i, xr[i], i, myvariable, fabs(myvariable - xr[i]));
+    //        err_count++;
+    //    }
+    //    fscanf(myfile, "%lf", &myvariable);
+    //    if (fabs(myvariable - xi[i]) > 0.1) {
+
+    //        printf("x[%d] = %.2f\ny[%d] = %.2f diff = %f\n", i, xi[i], i, myvariable, fabs(myvariable - xi[i]));
+    //        err_count++;
+    //    }
+    //}
+    //printf("Error count(Cuda vs Matlab dft): %zu\n", err_count);
+    err_count = 0;
+    for (int i = 0; i < ARRAY_SIZE; i++)
+    {
+        fscanf(myfile, "%lf", &myvariable);
+        if (fabs(myvariable - xr[i]) > fabs(0.001*myvariable)) {
+
+            printf("x[%d] = %.2f\ny[%d] = %.2f diff = %f was higher than = %f\n", i, xr[i], i, myvariable, fabs(myvariable - xr[i]), 0.01 * myvariable);
+            err_count++;
+        }
+        fscanf(myfile, "%lf", &myvariable);
+        if (fabs(myvariable - xi[i]) > fabs(0.001 * myvariable)) {
+
+            printf("x[%d] = %.2f\ny[%d] = %.2f diff = %f was higher than = %f\n", i, xi[i], i, myvariable, fabs(myvariable - xi[i]), 0.01 * myvariable);
+            err_count++;
+        }
+    }
+
+    printf("Error count(CUDA vs Matlab built-in dft): %zu\n", err_count);
+    fclose(myfile);
+    err_count = 0;
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        if (fabs(x[i] - y[i]) > 0.1) {
             printf("x[%d] = %.2f\ny[%d] = %.2f\n", i, x[i], i, y[i]);
             err_count++;
         }
     }
-    printf("Error count(CUDA program): %zu\n", err_count);
+    printf("Error count(CUDA idft): %zu\n", err_count);
     //free memory
     cudaFree(xr);
     cudaFree(xi);

@@ -5,6 +5,9 @@
     {
       "AbsoluteMoniker": "D:0:0:{FB756CDE-2EE3-4FD7-A02F-D2DC4473D2DD}|DFT.vcxproj|C:\\Users\\Adriel Teng\\source\\repos\\CEPARCO-Group-1-Integrating-Project\\Milestone 3\\kernel.cu||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{FB756CDE-2EE3-4FD7-A02F-D2DC4473D2DD}|DFT.vcxproj|solutionrelative:kernel.cu||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Grade 12\\Year 3\\Term 1\\CEDISP\\final\\sample.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +17,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,13 +29,23 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "sample.txt",
+              "DocumentMoniker": "E:\\Grade 12\\Year 3\\Term 1\\CEDISP\\final\\sample.txt",
+              "ToolTip": "E:\\Grade 12\\Year 3\\Term 1\\CEDISP\\final\\sample.txt",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2024-07-30T06:49:59.061Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "kernel.cu",
               "DocumentMoniker": "C:\\Users\\Adriel Teng\\source\\repos\\CEPARCO-Group-1-Integrating-Project\\Milestone 3\\kernel.cu",
               "RelativeDocumentMoniker": "kernel.cu",
-              "ToolTip": "C:\\Users\\Adriel Teng\\source\\repos\\CEPARCO-Group-1-Integrating-Project\\Milestone 3\\kernel.cu",
-              "RelativeToolTip": "kernel.cu",
-              "ViewState": "AQIAACcAAAAAAAAAAAAAADUAAAAcAAAA",
+              "ToolTip": "C:\\Users\\Adriel Teng\\source\\repos\\CEPARCO-Group-1-Integrating-Project\\Milestone 3\\kernel.cu*",
+              "RelativeToolTip": "kernel.cu*",
+              "ViewState": "AQIAACEAAAAAAAAAAAAAADwAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-07-27T10:53:07.674Z",
               "EditorCaption": ""
