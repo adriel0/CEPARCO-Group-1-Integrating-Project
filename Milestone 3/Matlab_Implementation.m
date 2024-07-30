@@ -52,7 +52,7 @@ average_time = total_time/5;
 fprintf('Average time elapsed (DFT built-in): %fms\n', average_time)
 
 
-%% output results for DFT correction checking, used for 2^10 for fast output
+%% output results for DFT correction checking
 fileID = fopen('sample.txt','w');
 for i = 1:1:size(x)
     fprintf(fileID,'%f %f\n',xr(i),xi(i));
