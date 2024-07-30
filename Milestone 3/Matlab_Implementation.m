@@ -4,8 +4,8 @@ N = 2^17;
 fprintf("Number of Elements: %d\n", N);
 x = zeros(N, 1);
 y = zeros(N, 1);
-for i = 1:N
-    x(i) = i;
+for i = 0:N-1
+    x(i+1) = i;
 end
 
 xr = zeros(N, 1);
